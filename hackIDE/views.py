@@ -13,12 +13,12 @@ from .models import codes
 import requests, json, os
 
 COMPILE_URL = "https://api.hackerearth.com/v3/code/compile/"
-RUN_URL = "https://api.hackerearth.com/v3/code/run/"
+RUN_URL = "https://api.hackerearth.com/code/run/"
 
 # access config variable
 DEBUG = (os.environ.get('HACKIDE_DEBUG') != None)
 # DEBUG = (os.environ.get('HACKIDE_DEBUG') or "").lower() == "true"
-CLIENT_SECRET = os.environ['HE_CLIENT_SECRET'] if not DEBUG else ""
+CLIENT_SECRET = os.environ['HE_CLIENT_SECRET'] if not DEBUG else "ae2f9a0a013f8dfeb5840476d3d1a60a5cff2474"
 
 permitted_languages = ["C", "CPP", "CSHARP", "CLOJURE", "CSS", "HASKELL", "JAVA", "JAVASCRIPT", "OBJECTIVEC", "PERL", "PHP", "PYTHON", "R", "RUBY", "RUST", "SCALA"]
 

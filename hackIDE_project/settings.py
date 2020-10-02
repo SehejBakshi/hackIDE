@@ -26,7 +26,8 @@ SECRET_KEY = '+h*i@$52+w(_e#etvzgnkjq!q0ajz1qpgs-y9%89x4w3nlct=m'
 DEBUG = (os.environ.get('HACKIDE_DEBUG') != None)
 # DEBUG = (os.environ.get('HACKIDE_DEBUG') or "").lower() == "true"
 
-ALLOWED_HOSTS = ['hackide.herokuapp.com'] if not DEBUG else ['*']
+#ALLOWED_HOSTS = ['hackide.herokuapp.com'] if not DEBUG else ['*']
+ALLOWED_HOSTS = ['*'] if not DEBUG else ['*']
 
 # To allow the cross site request over the app
 CORS_ORIGIN_ALLOW_ALL = True
@@ -44,16 +45,20 @@ INSTALLED_APPS = [
     'hackIDE.apps.HackideConfig',
 ]
 
+
 MIDDLEWARE_CLASSES = [
     # 'django.middleware.security.SecurityMiddleware',
-    # 'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    # 'django.contrib.auth.middleware.AuthenticationMiddleware',
     # 'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
-    # 'django.contrib.messages.middleware.MessageMiddleware',
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+MIDDLEWARE = [
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
 ]
 
 ROOT_URLCONF = 'hackIDE_project.urls'
@@ -74,7 +79,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'hackIDE_project.wsgi.application'
+#WSGI_APPLICATION = 'hackIDE_project.wsgi.application'
 
 
 # Database
@@ -114,7 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = None
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -137,4 +142,4 @@ STATICFILES_DIRS = (
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

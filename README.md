@@ -31,6 +31,7 @@ $ pip install -r requirements.txt
 To run the server locally you will need to do two things:
 1. Get a hackerearth API "Client Secret Key"
 2. Change the hackIDE_project/settings.py file
+3. Input HackerEarth Private Key in hackIDE/views.py file.
 
 ### Get a Client Secret Key
 Go to https://www.hackerearth.com/api/register/, create a HackerEarth profile and register a url. You can register http://google.com, for example. Then you will be provided with a Client Secret Key.
@@ -45,10 +46,10 @@ ALLOWED_HOSTS = ['*'] if not DEBUG else ['*']
 
 ```shell
 $ python manage.py collectstatic
-$ HE_CLIENT_SECRET=your_token_here python manage.py runserver
+$ HACKIDE_DEBUG=true python manage.py runserver
 ```
 
-Then you can connect to the site at 0.0.0.0:8000
+Then you can connect to the site at https://127.0.0.1:8000/
 
 ## TODO
  - [x] Add "Download code as a zipped file" option

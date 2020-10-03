@@ -123,6 +123,7 @@ var supportedModes = {
     Properties:  ["properties"],
     Protobuf:    ["proto"],
     Python:      ["py"],
+    Python3:      ["py"],
     R:           ["r"],
     RDoc:        ["Rd"],
     RHTML:       ["Rhtml"],
@@ -192,4 +193,3 @@ module.exports = {
                 (function() {
                     window.require(["ace/ext/modelist"], function() {});
                 })();
-            

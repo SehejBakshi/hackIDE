@@ -179,6 +179,7 @@ var supportedModes = {
     Properties:  ["properties"],
     Protobuf:    ["proto"],
     Python:      ["py"],
+    Python3:      ["py"],
     R:           ["r"],
     RDoc:        ["Rd"],
     RHTML:       ["Rhtml"],
@@ -419,12 +420,12 @@ module.exports.generateSettingsMenu = function generateSettingsMenu (editor) {
         elements.forEach(function(element) {
             topmenu.appendChild(element);
         });
-        
+
         var el = topmenu.appendChild(document.createElement('div'));
         var version = require("../../ace").version;
         el.style.padding = "1em";
         el.textContent = "Ace version " + version;
-        
+
         return topmenu;
     }
     function createNewEntry(obj, clss, item, val) {
@@ -607,16 +608,16 @@ module.exports.overlayPage = function overlayPage(editor, contentElement, top, r
 
     var wrapper = dom.createElement("div");
     wrapper.style.position = "relative";
-    
+
     var closeButton = dom.createElement("div");
     closeButton.className = "ace_closeButton";
     closeButton.addEventListener('click', function() {
         closer.click();
     });
-    
+
     wrapper.appendChild(closeButton);
     contentContainer.appendChild(wrapper);
-    
+
     contentContainer.appendChild(contentElement);
     closer.appendChild(contentContainer);
     document.body.appendChild(closer);
@@ -631,7 +632,7 @@ var generateSettingsMenu = require('./menu_tools/generate_settings_menu').genera
 var overlayPage = require('./menu_tools/overlay_page').overlayPage;
 function showSettingsMenu(editor) {
     var sm = document.getElementById('ace_settingsmenu');
-    if (!sm)    
+    if (!sm)
         overlayPage(editor, generateSettingsMenu(editor), '0', '0', '0');
 }
 module.exports.init = function(editor) {
@@ -644,4 +645,3 @@ module.exports.init = function(editor) {
                 (function() {
                     window.require(["ace/ext/settings_menu"], function() {});
                 })();
-            

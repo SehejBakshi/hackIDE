@@ -357,7 +357,7 @@ function setupApi(editor, editorDiv, settingDiv, ace, options, loader) {
             case "fontSize":
                 editor.$setOption(key, value);
             break;
-            
+
             default:
                 editor.$setOption(key, toBool(value));
         }
@@ -418,6 +418,7 @@ function setupSettingPanel(settingDiv, settingOpener, editor) {
             css:        "CSS",
             scss:       "SCSS",
             python:     "Python",
+            python3:    "Python3",
             php:        "PHP",
             java:       "Java",
             ruby:       "Ruby",
@@ -556,4 +557,3 @@ exports.defaultOptions = {
                 (function() {
                     window.require(["ace/ext/textarea"], function() {});
                 })();
-            

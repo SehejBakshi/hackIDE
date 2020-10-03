@@ -1,8 +1,8 @@
 /*
 * @Author: sahildua2305
 * @Date:   2016-01-06 01:50:10
-* @Last Modified by:   Sahil Dua
-* @Last Modified time: 2016-08-13 13:13:25
+* @Last Modified by:   sahildua2305
+* @Last Modified time: 2016-01-18 16:55:07
 */
 
 
@@ -21,7 +21,6 @@ $(document).ready(function(){
 	var COMPILE_URL = "compile/"
 	var RUN_URL = "run/"
 
-	//Language Boilerplate Codes
 	var langBoilerplate = {}
 	langBoilerplate['C'] = "#include <stdio.h>\nint main(void) {\n	// your code goes here\n	return 0;\n}\n";
 	langBoilerplate['CPP'] = "#include <iostream>\nusing namespace std;\n\nint main() {\n	// your code goes here\n	return 0;\n}\n";
@@ -63,13 +62,12 @@ $(document).ready(function(){
 		enableSnippets: true,
 		enableLiveAutocompletion: true
 	});
-	// include boilerplate code for selected default language
+
 	editor.setValue(langBoilerplate[languageSelected]);
 
 	// create a simple selection status indicator
 	var StatusBar = ace.require("ace/ext/statusbar").StatusBar;
 	var statusBar = new StatusBar(editor, document.getElementById("editor-statusbar"));
-
 
 	checkForInitialData();
 
@@ -146,31 +144,38 @@ $(document).ready(function(){
 		});
 	});
 
-	/**
-	* function to get filename by language given
-	*
-	*/
-	function getFileNameByLang(lang){
-		var filename = "code";
-		switch (lang) {
-			case "JAVA":
-				var content = editorContent;
-				var re = /public\sclass\s(.*)[.\n\r]*{/;
-				try {
-					filename = re.exec(content)[1];
-					filename = filename.replace(/(\r\n\s|\n|\r|\s)*/gm,"");
-				} catch (e) {}
-				break;
-			default:
-				break;
-		}
-		return filename;
-	}
+/*
+	// disable compile code button initially
+	$('#compile-code').prop('disabled', true);
+	$('#compile-code').prop('title', "Editor has no code");
+	$("#run-code").prop('disabled', true);
+	$('#run-code').prop('title', "Editor has no code");
+*/
+
+
 
 	/**
 	 * function to update editorContent with current content of editor
 	 *
 	 */
+
+	 function getFileNameByLang(lang){
+ 		var filename = "code";
+ 		switch (lang) {
+ 			case "JAVA":
+ 				var content = editorContent;
+ 				var re = /public\sclass\s(.*)[.\n\r]*{/;
+ 				try {
+ 					filename = re.exec(content)[1];
+ 					filename = filename.replace(/(\r\n\s|\n|\r|\s)*/gm,"");
+ 				} catch (e) {}
+ 				break;
+ 			default:
+ 				break;
+ 		}
+ 		return filename;
+ 	}
+
 	function updateContent(){
 		editorContent = editor.getValue();
 	}
@@ -223,8 +228,8 @@ $(document).ready(function(){
 		}
 
 		saveAs(downloaded, final_filename_choice)
-
 	}
+
 
 	/**
 	 * function to send AJAX request to 'compile/' endpoint
@@ -251,7 +256,6 @@ $(document).ready(function(){
 
 		var csrf_token = $(":input[name='csrfmiddlewaretoken']").val();
 
-		// if code_id present in url and updated compile URL
 		if(window.location.href.includes('code_id')) {
 			COMPILE_URL = '/../compile/';
 		}
@@ -302,7 +306,7 @@ $(document).ready(function(){
 						$(".output-io-info").hide();
 						$(".compile-status").children(".value").html("--");
 						$(".error-key").html("Compile error");
-
+						//$(".error-message").html(response.compile_status);
 						var compileMsgResponse = response.compile_status;
 						if (response.compile_status == "" || response.compile_status.length <= 1) {
 							compileMsgResponse = "Empty Compile Response. Something went wrong while compiling.";
@@ -377,7 +381,6 @@ $(document).ready(function(){
 
 		var csrf_token = $(":input[name='csrfmiddlewaretoken']").val();
 
-		// if code_id present in url and update run URL
 		if(window.location.href.includes('code_id')) {
 			RUN_URL = '/../run/';
 		}
@@ -401,6 +404,7 @@ $(document).ready(function(){
 				dataType: "json",
 				timeout: 10000,
 				success: function(response){
+
 					request_ongoing = false;
 
 					if(location.port == "")
@@ -454,7 +458,7 @@ $(document).ready(function(){
 						$(".output-io").show();
 						$(".output-io-info").hide();
 						$(".compile-status").children(".value").html("--");
-						$(".run-status").children(".value").html("Compilation Error");
+						$(".run-status").children(".value").html("CE");
 						$(".time-sec").children(".value").html("0.0");
 						$(".memory-kb").children(".value").html("0");
 						$(".error-key").html("Compile error");
@@ -573,7 +577,7 @@ $(document).ready(function(){
 						$(".output-io").show();
 						$(".output-io-info").hide();
 						$(".compile-status").children(".value").html("--");
-						$(".run-status").children(".value").html("Compilation Error");
+						$(".run-status").children(".value").html("CE");
 						$(".time-sec").children(".value").html("0.0");
 						$(".memory-kb").children(".value").html("0");
 						$(".error-key").html("Compile error");
@@ -616,21 +620,11 @@ $(document).ready(function(){
 
 
 	// when show-settings is clicked
-	$("#show-settings").click(function(event){
-
-		event.stopPropagation();
+	$("#show-settings").click(function(){
 
 		// toggle visibility of the pane
 		$("#settings-pane").toggle();
 
-	});
-
-
-	//close settings dropdown
-	$(function(){
-		$(document).click(function(){
-			$('#settings-pane').hide();
-		});
 	});
 
 
@@ -639,11 +633,10 @@ $(document).ready(function(){
 
 		// TODO: implement download code feature
 		updateContent();
-
-		var fileName = getFileNameByLang($("#lang").val());
-		downloadFile(fileName, editorContent, $("#lang").val());
+		downloadFile("code", editorContent, $("#lang").val());
 
 	});
+
 
 	// when lang is changed
 	$("#lang").change(function(){
@@ -658,7 +651,6 @@ $(document).ready(function(){
 			editor.getSession().setMode("ace/mode/" + languageSelected.toLowerCase());
 		}
 
-		//Change the contents to the boilerplate code
 		editor.setValue(langBoilerplate[languageSelected]);
 
 	});
@@ -679,17 +671,6 @@ $(document).ready(function(){
 
 	});
 
-	//close dropdown after focus is lost
-	var mouse_inside = false;
-	$('#settings-pane').hover(function(){
-		mouse_inside = true;
-	}, function(){
-		mouse_inside = false;
-	});
-	$('body').mouseup(function(){
-		if(!mouse_inside)
-			$('#settings-pane').hide();
-	});
 
 	// when indent-spaces is changed
 	$("#indent-spaces").change(function(){
@@ -784,12 +765,5 @@ $(document).ready(function(){
 		runCode();
 
 	});
-
-	// check if input box is to be show
-	if($('#custom-input').val()!="")
-	{
-		$('#custom-input-checkbox').click();
-	}
-
 
 });

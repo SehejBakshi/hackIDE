@@ -20,7 +20,7 @@ DEBUG = (os.environ.get('HACKIDE_DEBUG') != None)
 # DEBUG = (os.environ.get('HACKIDE_DEBUG') or "").lower() == "true"
 CLIENT_SECRET = os.environ['HE_CLIENT_SECRET'] if not DEBUG else "ae2f9a0a013f8dfeb5840476d3d1a60a5cff2474"
 
-permitted_languages = ["C", "CPP", "CSHARP", "CLOJURE", "CSS", "HASKELL", "JAVA", "JAVASCRIPT", "OBJECTIVEC", "PERL", "PHP", "PYTHON", "R", "RUBY", "RUST", "SCALA"]
+permitted_languages = ["C", "CPP", "CSHARP", "CLOJURE", "CSS", "HASKELL", "JAVA", "JAVASCRIPT", "OBJECTIVEC", "PERL", "PHP", "PYTHON", "PYTHON3", "R", "RUBY", "RUST", "SCALA"]
 
 
 """
@@ -203,7 +203,8 @@ def savedCodeView(request, code_id):
   code_content = result['code_content']
   lang = result['lang']
   code_input = result['code_input']
-  compile_status = str(result['compile_status'].encode('utf-8')).decode('utf-8')
+  #compile_status = str(result['compile_status'].encode('utf-8')).decode('utf-8')
+  compile_status = str(result['compile_status'])
   run_status_status = result['run_status_status']
   run_status_time = result['run_status_time']
   run_status_memory = result['run_status_memory']
